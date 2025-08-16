@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopify Insights Fetcher</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Shopify Store Insights</h1>
+    <form id="fetchForm">
+      <label for="website_url">Shopify Store URL</label>
+      <input id="website_url" name="website_url" type="url" placeholder="https://mystore.com" required />
+      <button type="submit">Fetch Insights</button>
+    </form>
+
+    <pre id="result" class="code"></pre>
+  </div>
+
+  <script>
+    const form = document.getElementById('fetchForm');
+    const result = document.getElementById('result');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      result.textContent = 'Fetching…';
+      const url = document.getElementById('website_url').value;
+      try {
+        const resp = await fetch('/api/extract', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ website_url: url })
+        });
+        if (!resp.ok) {
+          const err = await resp.json();
+          result.textContent = JSON.stringify(err, null, 2);
+        } else {
+          const data = await resp.json();
+          result.textContent = JSON.stringify(data, null, 2);
+        }
+      } catch (e) {
+        result.textContent = 'Error: ' + e.message;
+      }
+    });
+  </script>
+</body>
+</html>
