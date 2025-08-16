@@ -21,6 +21,9 @@ python -m venv .venv
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Run the app
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 ## DEMO
@@ -39,16 +42,3 @@ pip install -r requirements.txt
 
 #### Backend
 <img width="533" height="218" alt="image" src="https://github.com/user-attachments/assets/6fb45cd7-1731-45b8-a6df-95390439b4a8" />
-
-
-
-
-
-
-
-
-
-
-
-# Run the app
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
